@@ -1,25 +1,32 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class day1{
     public static void main(String[] args){
-        List<String> datas = new ArrayList<>();
-        for (String ligne : Files.readAllLines(Paths.get(info))) {
-            for (String chaine : ligne.split(\\s+)){
-                String entier = Integer.valueOf(chaine);
-                datas.add(entier);
-            }
-        }
+        //File nameFile = new File("info");
+        BufferedReader read = new BufferedReader(new FileReader("../Day1/info.txt"));
+        int compteur = 0;
+        String ligne = read.readLine();
+
         int res = 50;
-        for (String i:datas){
-            int nb = parInt(i.substring(1));
-            int temp = res;
-            nb=nb-(nb%100)*100
-            if (i.charat(0)=="L"){
+        int nb = Integer.parseInt(ligne.substring(1));
+        while (ligne != null){
+            compteur++;
+            if (ligne.charAt(0)=='L'){
                 res-=nb;
             }
             else res+=nb;
             if (nb<0){
                 res+=100;
             }
-            
+            ligne = read.readLine();
         }
+        read.close();
+        System.out.println(compteur);
+
     }
 }
