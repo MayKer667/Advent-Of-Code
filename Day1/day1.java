@@ -17,9 +17,8 @@ public class day1{
             }
             else res+=nb;
             if (nb<0){
-                res+=100;
+                
             }
-            
         }
     }
 }
