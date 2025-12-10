@@ -4,8 +4,32 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class day1{
+
+    public static int changeRes(int res,char premChar,int changeRes,int nbZero){
+        int changeResult = changeRes%100;
+        if (premChar=='L'){
+            res -= changeResult;
+            if (res<0){
+                res+=100;
+                nbZero+=1;
+            } 
+        }
+        else{
+            res += changeResult;
+            if (res>99){
+                nbZero+=1;
+                res -= 100;
+            }
+        }
+        return res;
+    }
+
+    public static int nbTour(int nb){
+        return ((nb-(nb%100))/100);
+    }
+
     public static void main(String[] args) throws IOException{
-        BufferedReader read = new BufferedReader(new FileReader("../Day1/info.txt"));
+        BufferedReader read = new BufferedReader(new FileReader("./info.txt"));
         int compteur = 0;
         String ligne = read.readLine();
 
@@ -14,35 +38,16 @@ public class day1{
         int nbZero = 0;
         while (ligne != null){
             nb = Integer.parseInt(ligne.substring(1));
-            //System.out.print("nb "+nb);
-            //nb = nb%100;
             compteur++;
-            if (ligne.charAt(0)=='L'){
-                res-=nb;
-            }
-            else res+=nb;
-            res%=100;
-            if (compteur<40 || compteur%100==10) {
-                System.out.println("res1 "+res);    
-            }
-            if (res<0){
-                res+=100;
-            }
-            if (res==0) nbZero+=1;
-            if ((res>nb%100) && (ligne.charAt(0)=='L')){
-                nbZero+=1;
-            }
-            else if (res<nb%100 && (ligne.charAt(0)=='R')) nbZero+=1;
-            if (compteur<40 || compteur%100==10) {
-                System.out.println("res2 "+res);    
-            }//System.out.println("nb "+nb+" res "+res+" ligne "+ligne.charAt(0)+" "+(ligne.charAt(0)=='L')+" compteur "+compteur+" nbZero "+nbZero);
-            nbZero += (nb-nb%100)/100;
+            res = changeRes(res,ligne.charAt(0),nb,nbZero);
+            int nombreDeTour = nbTour(nb);
+            //if (nombreDeTour>0) System.out.println("Nombre de tours "+nombreDeTour+" tour "+compteur);
+            nbZero+=nombreDeTour;
             ligne = read.readLine();
         }
-        System.out.println((50-68)%100+" modulo 100 "+12%100*100);
+        System.out.println(312+" modulo 100 "+(312-(312%100))/100+" "+312%100);
         read.close();
         System.out.println(compteur);
         System.out.println(nbZero);
-
     }
 }
