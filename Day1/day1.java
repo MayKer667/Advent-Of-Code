@@ -4,8 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class day1{
-
-    public static int changeRes(int res,char premChar,int changeRes,int nbZero){
+    public static int[] changeRes(int res,char premChar,int changeRes,int nbZero){
         int changeResult = changeRes%100;
         if (premChar=='L'){
             res -= changeResult;
@@ -21,11 +20,12 @@ public class day1{
                 res -= 100;
             }
         }
-        return res;
+        int[] tabRes = {res,nbZero};
+        return tabRes;
     }
 
     public static int nbTour(int nb){
-        return ((nb-(nb%100))/100);
+        return (nb/100);
     }
 
     public static void main(String[] args) throws IOException{
@@ -39,7 +39,9 @@ public class day1{
         while (ligne != null){
             nb = Integer.parseInt(ligne.substring(1));
             compteur++;
-            res = changeRes(res,ligne.charAt(0),nb,nbZero);
+            int[] tabRes = changeRes(res,ligne.charAt(0),nb,nbZero);
+            res = tabRes[0];
+            nbZero = tabRes[1]; 
             int nombreDeTour = nbTour(nb);
             //if (nombreDeTour>0) System.out.println("Nombre de tours "+nombreDeTour+" tour "+compteur);
             nbZero+=nombreDeTour;
