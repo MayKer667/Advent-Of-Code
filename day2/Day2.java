@@ -19,12 +19,18 @@ public class Day2{
     public static long problematique(long elemenLong){
         String elem = Long.toString(elemenLong);
         int taille = elem.length();
+        boolean alreadyTest = false;
         for (int i = 1;i<taille/2;i++){
             boolean bon = true;
             int nbPar = i;
             if (taille%i==0){
                 String[] liste = decoupe(elem,nbPar);
-                if for(int i:liste) System.out.println(liste[i]);
+                if(i==3 && !alreadyTest){
+                    for(String y:liste){
+                        System.out.println(y);
+                    }
+                    alreadyTest=true;
+                }
                 for(int y = 1;y<liste.length;y++){
                     if (!liste[0].equals(liste[y])){
                         bon=false;
