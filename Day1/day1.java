@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class day1{
-
     public static int[] changeRes(int res,char premChar,int changeRes,int nbZero){
         int changeResult = changeRes%100;
         if (premChar=='L'){
