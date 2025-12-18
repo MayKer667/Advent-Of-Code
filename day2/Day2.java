@@ -1,42 +1,65 @@
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public class Day2{
 
-    public static int problematique(String elem){
-        int millieu = elem.length/2;
-        if (elem.length%2==1){
-            return 0;
+
+    public static String[] decoupe(String listeChar, int nb){
+        String[] res = new String[listeChar.length()/nb];
+        for(int i = 0;i<listeChar.length();i++){
+            //System.out.println(i+" "+nb+" "+listeChar.length());
+            res[i/nb] += listeChar.charAt(i);
         }
-        String res = "";
-        for(int i = 0; i<(millieu);i++){
-            if(elem[i]!=elem[i+millieu]){
-                return 0;
+        return res;
+    }
+
+    public static long problematique(long elemenLong){
+        String elem = Long.toString(elemenLong);
+        int taille = elem.length();
+        for (int i = 1;i<taille/2;i++){
+            boolean bon = true;
+            int nbPar = i;
+            if (taille%i==0){
+                String[] liste = decoupe(elem,nbPar);
+                if for(int i:liste) System.out.println(liste[i]);
+                for(int y = 1;y<liste.length;y++){
+                    if (!liste[0].equals(liste[y])){
+                        bon=false;
+                    }
+                }
+                if(bon){
+                    return elemenLong;
+                }
             }
-            res+=elem[i];
         }
-        return Integer.parseInt(res);
+        
+        return 0;
     }
     
-    public static void main(String[] args){
-        BufferedReader read = new BufferedReader(new FileReader("./info.txt"));
+    public static void main(String[] args) throws IOException{
+
+        System.out.println(5%3+" "+6%3+" "+6%4);
+        BufferedReader read = new BufferedReader(new FileReader("info.txt"));
         String ligne = read.readLine();
         String[] elements = ligne.split(",");
-        int res = 0;
+        long res = 0;
         for(int i = 0; i<elements.length;i++){
             String[] listeElem = elements[i].split("-");
-            int premElem = Integer.parseInt(listeElem[0]);
-            int deuxElem = Integer.parseInt(listeElem[1]);
-            for(int y = premElem;y<deuxElem;y++){
-                String strElem = Integer.toString(i);
-                int pb = problematique(strElem);
+            long premElem = Long.parseLong(listeElem[0]);
+            long deuxElem = Long.parseLong(listeElem[1]);
+            for(long y = premElem;y<deuxElem;y++){
+                String strElem = Long.toString(i);
+                long pb = problematique(y);
+                //if (pb!=0) System.out.println(pb + " "+y);
                 res+=pb;
             }
         }
         System.out.println(res);
     }
 }
+
+//7830558185 too low
+//37432260594 solution
