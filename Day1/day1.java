@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class day1{
 
-    public static int changeRes(int res,char premChar,int changeRes,int nbZero){
+    public static int[] changeRes(int res,char premChar,int changeRes,int nbZero){
         int changeResult = changeRes%100;
         if (premChar=='L'){
             res -= changeResult;
@@ -17,15 +17,16 @@ public class day1{
         else{
             res += changeResult;
             if (res>99){
-                nbZero+=1;
                 res -= 100;
+                nbZero+=1;
             }
         }
-        return res;
+        int[] tab = {res,nbZero};
+        return tab;
     }
 
     public static int nbTour(int nb){
-        return ((nb-(nb%100))/100);
+        return (nb/100);
     }
 
     public static void main(String[] args) throws IOException{
@@ -39,15 +40,22 @@ public class day1{
         while (ligne != null){
             nb = Integer.parseInt(ligne.substring(1));
             compteur++;
-            res = changeRes(res,ligne.charAt(0),nb,nbZero);
-            int nombreDeTour = nbTour(nb);
-            //if (nombreDeTour>0) System.out.println("Nombre de tours "+nombreDeTour+" tour "+compteur);
+            int[] tabRes = changeRes(res,ligne.charAt(0),nb,nbZero);
+            res = tabRes[0];
+            nbZero=tabRes[1];
+            int nombreDeTour = nb/100;
+            if (nombreDeTour>0) System.out.println("Nombre de tours "+nombreDeTour+" tour "+compteur+" nombre zero "+nbZero);
             nbZero+=nombreDeTour;
             ligne = read.readLine();
+            if (res<0 || res>99){
+                System.out.println("res "+res);
+                break;
+            }
         }
         System.out.println(312+" modulo 100 "+(312-(312%100))/100+" "+312%100);
         read.close();
         System.out.println(compteur);
         System.out.println(nbZero);
+
     }
 }
